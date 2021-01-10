@@ -15,7 +15,7 @@ class Customer extends React.Component {
         </TableRow>
         )
     }
-}
+} 
 
 
 export default Customer;
