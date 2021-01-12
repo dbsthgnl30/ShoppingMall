@@ -25,6 +25,9 @@ const connection =mysql.createConnection({
 //mysql연결
 connection.connect();
 
+const multer =require('multer');//multer라이브러리 불러옴
+
+
 
 // API를 이용한 SQL조회
 app.get('/api/customers',(req,res) => {
@@ -36,18 +39,34 @@ app.get('/api/customers',(req,res) => {
       }
  
     );
+  });
+//
+  app.use('/image', express.static('./upload'));
 
-// API를 이용한 SQL조회
-app.get('/api/goodList',(req,res) => {
+  const upload= multer({dest:'./upload'})//사용자 파일 업로드 폴더=서버에 기본  루트 폴더에 있는 업로드 폴더
 
-  connection.query(
-    "SELECT * FROM CUSTOMER",
-    (err,rows,fields) =>{
-      res.send(rows);   // 값 리턴
-    }
-  );
+  app.post('/api/customers/add',upload.single('image'),(req,res) =>{
+    
+      console.log(req.body);
+      let sql= 'INSERT INTO CUSTOMER VALUES (null,?,?,?,?,?)';
+      let image='/image/'+req.file.filename;
+      let name=req.body.name;
+      let birthday=req.body.birthday;
+      let gender=req.body.gender;
+      let job=req.body.job;
+      let params=[image,name,birthday,gender,job];
 
+      connection.query(sql,params,
+        (err,rows,fields) =>{
+          res.send(rows);   // 값 리턴
+        }
+  
+      );
+      
+  });
 
+ 
+ 
   // API를 이용한 SQL조회
 app.get('/api/goodList',(req,res) => {
 
@@ -63,4 +82,3 @@ app.get('/api/goodList',(req,res) => {
 
 
 app.listen(port,()=> console.log('Listening on port 5000'));
-
