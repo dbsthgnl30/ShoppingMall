@@ -33,7 +33,7 @@ const multer =require('multer');//multer라이브러리 불러옴
 app.get('/api/customers',(req,res) => {
 
     connection.query(
-      "SELECT * FROM CUSTOMER",
+      "SELECT * FROM CUSTOMER WHERE isDeleted=0",
       (err,rows,fields) =>{
         res.send(rows);   // 값 리턴
       }
@@ -47,18 +47,27 @@ app.get('/api/customers',(req,res) => {
 
   app.post('/api/customers/add',upload.single('image'),(req,res) =>{
     
+    
       console.log(req.body);
-      let sql= 'INSERT INTO CUSTOMER VALUES (null,?,?,?,?,?)';
-      let image='/image/'+req.file.filename;
-      let name=req.body.name;
-      let birthday=req.body.birthday;
-      let gender=req.body.gender;
-      let job=req.body.job;
-      let params=[image,name,birthday,gender,job];
+      let sql         = 'INSERT INTO CUSTOMER VALUES (null,?,?,?,?,?,?,?)';
+
+      
+      let image       = '/image/'+ req.file.filename;
+      let name        = req.body.name;
+      let birthday    = req.body.birthday;
+      let gender      = req.body.gender;
+      let job         = req.body.job;
+      let createdDate = new Date();
+      let isDeleted   = 0;
+      let params      = [image,name,birthday,gender,job,createdDate,isDeleted];
 
       connection.query(sql,params,
         (err,rows,fields) =>{
           res.send(rows);   // 값 리턴
+
+          if(err !=null){
+            console.log(err);
+          }  
         }
   
       );
@@ -67,18 +76,28 @@ app.get('/api/customers',(req,res) => {
 
  
  
+ 
   // API를 이용한 SQL조회
-app.get('/api/goodList',(req,res) => {
+  app.delete('/api/customers/:id',(req,res) => {
 
-  connection.query(
-    "SELECT * FROM CUSTOMER",
-    (err,rows,fields) =>{
-      res.send(rows);   // 값 리턴
+    console.log(req.params);
+
+    let sql='UPDATE CUSTOMER SET isDeleted =1 WHERE id=?';
+    let params=[req.params.id];
+    connection.query(sql,params,
+      (err,rows,fields) =>{
+        res.send(rows); 
+
+        if(err !=null){
+          console.log(err);
+        }  
     }
   );
 
 
 });
 
+  
+  
 
 app.listen(port,()=> console.log('Listening on port 5000'));

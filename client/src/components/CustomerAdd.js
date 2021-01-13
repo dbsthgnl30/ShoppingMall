@@ -25,18 +25,18 @@ class CustomerAdd extends React.Component{
         this.addCustomer()
             .then((response) =>{//서버로 부터 어떤 응답이 왔을 때 건너온 데이터를 콘솔창에 출력
                 console.log(response.data);
-                this.props.stateRefresh();//고객추가-> 서버응답->고객목록 다시 불러옴
+   //             this.props.stateRefresh();//고객추가-> 서버응답->고객목록 다시 불러옴
             })
             console.log("2");
-        this.setState({           
-            file    :null,  //binary 형태의 데이터 
-            userName:'',
-            birthday:'',
-            gender  :'',
-            job     :'',           
-            fileName:''  //이미지 파일 이름
+        // this.setState({           
+        //     file    :null,  //binary 형태의 데이터 
+        //     userName:'',
+        //     birthday:'',
+        //     gender  :'',
+        //     job     :'',           
+        //     fileName:''  //이미지 파일 이름
         
-        })
+        // })
 
     }
 
@@ -47,6 +47,8 @@ class CustomerAdd extends React.Component{
     } 
 
     handleFileChange =(e) => {
+
+    
         this.setState({
             file: e.target.files[0],//e.target=이벤트가 발생한 인풋 값 자체
             fileName :e.target.value
