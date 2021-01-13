@@ -19,12 +19,13 @@ class CustomerAdd extends React.Component{
 
 
 
-    handleFormSubmit =(e)=>{ 
+    handleFormSubmit =(e)=>{ //고객 데이터 추가 
         console.log("1");
         e.preventDefault()//데이터가 서버에 전달 될때 오류가 발생하지 않도록 해주는 함수
         this.addCustomer()
             .then((response) =>{//서버로 부터 어떤 응답이 왔을 때 건너온 데이터를 콘솔창에 출력
                 console.log(response.data);
+                this.props.stateRefresh();//고객추가-> 서버응답->고객목록 다시 불러옴
             })
             console.log("2");
         this.setState({           
@@ -36,7 +37,7 @@ class CustomerAdd extends React.Component{
             fileName:''  //이미지 파일 이름
         
         })
-        window.location.reload();
+
     }
 
     handleValueChange =(e) =>{

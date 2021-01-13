@@ -34,16 +34,27 @@ const styles = theme =>({
 
 class App extends Component{ 
 
-  state={
-
-    customers:[],
-    completed:0
+  constructor(props){
+    super(props);
+    this.state={
+      customers:'',
+      completed:0
+    }
 
   }
+  stateRefresh =() =>{//state 초기화 ,고객데이터가 추가 될 때 함께 실행됨
+    this.setState({
+      customers:'',
+      complieted: 0
 
+    });
+    this.callApi()//고객 목록을 새롭게 다시 불러옴 
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+  } 
 
  
-  componentDidMount(){ 
+  componentDidMount(){
     this.timer=setInterval(this.progress,20);  
     this.callApi()
     .then(res => this.setState({customers: res}))
@@ -65,7 +76,7 @@ class App extends Component{
   render(){
 
     const{classes}=this.props;
-    return (
+    return (//
        <div>   
        <Paper className={classes.root}>
           <Table className={classes.table}>
@@ -95,8 +106,8 @@ class App extends Component{
             </TableBody>
           </Table>
         </Paper> 
-        <CustomerAdd/>
-        </div>
+        <CustomerAdd stateRefresh={this.stateRefresh}/>   
+        </div>//CustomerAdd를 화면에 출력 할 때 props값으로 stateRefresh(함수 자체를  props형태로)
             );
     } 
 }
