@@ -1,8 +1,24 @@
 import React from 'react';
 //포스트 방식으로 고객 추가 데이터 서버로 보낼 수 있도록 axios 에서 포스트 라이브러라 추가
 import {post} from 'axios';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = theme => ({
+    hidden :{
+        display :'none'
+    }
+});
+
 
 class CustomerAdd extends React.Component{
+
+   
     
     constructor(props){
         super(props);
@@ -12,10 +28,12 @@ class CustomerAdd extends React.Component{
             birthday:'',
             gender  :'',
             job     :'',           
-            fileName: ''  //이미지 파일 이름
+            fileName: '',
+            open    :false  //이미지 파일 이름
 
         }
     }
+
 
 
 
@@ -25,18 +43,18 @@ class CustomerAdd extends React.Component{
         this.addCustomer()
             .then((response) =>{//서버로 부터 어떤 응답이 왔을 때 건너온 데이터를 콘솔창에 출력
                 console.log(response.data);
-   //             this.props.stateRefresh();//고객추가-> 서버응답->고객목록 다시 불러옴
+              this.props.stateRefresh();//고객추가-> 서버응답->고객목록 다시 불러옴
             })
             console.log("2");
-        // this.setState({           
-        //     file    :null,  //binary 형태의 데이터 
-        //     userName:'',
-        //     birthday:'',
-        //     gender  :'',
-        //     job     :'',           
-        //     fileName:''  //이미지 파일 이름
-        
-        // })
+        this.setState({           
+             file    :null,  //binary 형태의 데이터 
+             userName:'',
+             birthday:'',
+             gender  :'',
+             job     :'',           
+             fileName:'',  //이미지 파일 이름
+             open    :false
+         })
 
     }
 
@@ -73,27 +91,61 @@ class CustomerAdd extends React.Component{
         } 
         console.log(formData);
         return post(url,formData,config);//post 라이브러리를 이용해서 해당 url에 formData를 해당 환경 설정에 맞게 헤더를 붙여서 실제로 서버로 데이터 보냄
+    } 
+
+    handleClickOpen =() => {//사용자가 고객추가 버튼 눌러서 고객 추가모달 팝업 창 뜸
+        this.setState({
+            open :true
+        });
     }
+
+    handleClose = ()=> {
+    this.setState({           
+         file    :null,  //binary 형태의 데이터 
+         userName:'',
+         birthday:'',
+         gender  :'',
+         job     :'',           
+         fileName:'',  //이미지 파일 이름
+         open :false//현재 팝업 창이 화면에 출력 되지 않도록
+     })
+}
+
+
+
     render(){
+        const { classes } =this.props;
         //고객 추가 양식이 어떤식으로 보여지는지 
          return(
-             //고객 추가 버튼을 눌렀을 때  handleFormSubmit 함수가 수행
-             <form >
-                <h1>고객 추가</h1> 
-                프로필 이미지: <input type ="file" name="file"    value={this.state.fileName} onChange={this.handleFileChange} file={this.state.file} /><br/>
-                이름 :        <input type ="text" name="userName" value={this.state.userName} onChange={this.handleValueChange}/><br/>
-                생년월일 :    <input type ="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange}/><br/>
-                성별  :       <input type ="text" name="gender"   value={this.state.gender}   onChange={this.handleValueChange}/><br/>
-                직업  :       <input type ="text" name="job"      value={this.state.job}      onChange={this.handleValueChange}/><br/>
-                <button type="submit" onClick={this.handleFormSubmit}>추가하기</button>
-             </form>
-             //input tag 가 있으면 값들이 변경 되었을 떄 상태 변화 감지 (onChange)
-
+            <div>
+                <Button variant ="contained" color="primary" onClick={this.handleClickOpen}>
+                   고객 추가하기
+                </Button> 
+                <Dialog open={this.state.open} onClose={this.handleClose}>
+                    <DialogTitle>고객 추가</DialogTitle>
+                    <DialogContent>
+                    <input className={classes.hidden} accept="image/*" id="raised-button-file" type ="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} file={this.state.file} /><br/>
+                    <label htmlFor="raised-button-file">
+                        <Button variant="contained" color ="primary" component="span" name ="file">
+                            {this.state.fileName ==="" ? "프로필 이미지 선택" : this.state.fileName} 
+                        </Button>
+                    </label> 
+                    <br/>
+                    <TextField label="이름" input type ="text" name="userName" value={this.state.userName} onChange={this.handleValueChange}/><br/>
+                    <TextField label="생일" input type ="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange}/><br/>
+                    <TextField label="성별" input type ="text" name="gender"   value={this.state.gender}   onChange={this.handleValueChange}/><br/>
+                    <TextField label="직업" input type ="text" name="job"      value={this.state.job}      onChange={this.handleValueChange}/><br/>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
+                        <Button variant="outlined" color="primary" onClick={this.handleFormClose}>닫기</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>  
+           
          )
 
     }
 
 }
-
-export default CustomerAdd; //외부라이브러리 사용
-
+export default withStyles(styles)(CustomerAdd);
