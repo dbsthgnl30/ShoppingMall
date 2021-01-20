@@ -29,9 +29,5 @@ CREATE TABLE TB_PRDCSF_INFO(
 
 );
 
-insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
-insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
-insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
-insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
-insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+insert into TB_PRDCSF_INFO values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
 
