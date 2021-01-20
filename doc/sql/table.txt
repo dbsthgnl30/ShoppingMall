@@ -28,3 +28,10 @@ CREATE TABLE TB_PRDCSF_INFO(
 	PRD_CLA_IMG		TINYBLOB
 
 );
+
+insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+insert into values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
+
