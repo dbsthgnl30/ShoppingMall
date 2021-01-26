@@ -1,32 +1,43 @@
-//상품정보
-CREATE TABLE TB_PRODUCT(
 
-	PRODUCT_NO	 	VARCHAR(9),
-	PRODUCT_NM 		VARCHAR(30) NOT NULL,
-	PRD_SML_CLA 		VARCHAR(9) NOT NULL,
-	PRD_PRICE		INTEGER(8),
-	PRD_STOCK_QT		INTEGER(4)  NOT NULL,
-	RELEASE_ST_DT		DATETIME,
-	RELEASE_ED_DT		DATETIME,
-	DELIVERY_AVAILABLE_DT	DATETIME,
-	DISCOUNT_RATE		INTEGER(2),
-	MANUFACTURER		VARHAR(50),
-	UNIT_PACK		VARCHAR(100),
-	MK_DT			VARHAR(100),
-	USER_RV_POINT		INTEGER(5)
+DROP TABLE TB_PRODUCT;
+
+SELECT * FROM TB_PRODUCT;
+CREATE TABLE TB_PRODUCT(
+	productNo	 			varchar(9),
+	productNm 				varchar(30) not null,
+	prdSmlCla 			varchar(9) not null,
+	prdPrice				integer(8),
+	prdStockQt			integer(4)  not null,
+	releaseStDt			datetime,
+	releaseEdDt			datetime,
+	deliveryAvailableDt	datetime,
+	discountRate			integer(2),
+	manufacturer			varchar(50),
+	unitPack				varchar(100),
+	mkDt					varchar(100),
+	userRvPoint			integer(5)
 );
 
 //상품분류정보
-CREATE TABLE TB_PRDCSF_INFO(
-	
-	PRD_BIG_CLA		VARCHAR(9),
-	PRD_MID_CLA		VARCHAR(9),
-	PRD_SML_CLA		VARCHAR(9),
-	PRD_BIG_DSC		VARCHAR(100),
-	PRD_MID_DSC		VARCHAR(100),
-	PRD_SML_DSC		VARCHAR(100),
-	PRD_CLA_IMG		TINYBLOB
+insert into TB_PRODUCT values('000000001', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into TB_PRODUCT values('000000002', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into TB_PRODUCT values('000000003', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into TB_PRODUCT values('000000004', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into TB_PRODUCT values('000000005', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into TB_PRODUCT values('000000006', '매드시스터 여성용 버터 오버핏 맨투맨 티셔츠', '001001001', 16800,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
+
+
+
+DROP TABLE TB_PRDCSF_INFO;
+CREATE TABLE TB_PRDCSF_INFO(		
+	prdBigCla		varchar(9),
+	prdMidCla		varchar(9),
+	prdSmlCla		varchar(9),
+	prdBigDsc		varchar(100),
+	prdMidDsc		varchar(100),
+	prdSmlDsc		varchar(100),
+	prdClaImg		tinyblob
 );
 
 insert into TB_PRDCSF_INFO values('001', '001001', '001001001', '의류/잡화','여성패션', '티셔츠',null);
